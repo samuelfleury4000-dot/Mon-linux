@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Caisse - Casino</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a3a 50%, #0d1420 100%);
+            color: white; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page { max-width: 1200px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header h1 { font-size: 2.5rem; color: #38b6ff; }
+        .header-buttons { display: flex; gap: 12px; }
+        .header-buttons button { 
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #0c4a7a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .header-buttons button:hover { background: #0d5a8a; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #26455f;
+            padding-bottom: 0;
+        }
+        .tab-btn {
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            color: #9cc9ff;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: #38b6ff;
+            border-bottom-color: #38b6ff;
+        }
+        .tab-btn:hover { color: #5cc9ff; }
+
+        /* Tab Content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Grid Layout */
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(135deg, rgba(20, 40, 60, 0.9) 0%, rgba(10, 25, 45, 0.9) 100%);
+            border: 1px solid rgba(56, 182, 255, 0.2);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(56, 182, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(56, 182, 255, 0.1);
+        }
+        .card h2 {
+            color: #38b6ff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #9cc9ff;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #26455f;
+            border-radius: 10px;
+            background: rgba(10, 20, 35, 0.8);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #38b6ff;
+            box-shadow: 0 0 10px rgba(56, 182, 255, 0.2);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #38b6ff 0%, #2496dd 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4ac6ff 0%, #2fa6ed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(56, 182, 255, 0.3);
+        }
+        .btn-primary:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Info Messages */
+        .info-box {
+            background: rgba(56, 182, 255, 0.1);
+            border-left: 4px solid #38b6ff;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            color: #b3d9ff;
+            font-size: 0.95rem;
+        }
+        .success { 
+            border-left-color: #54ff7a;
+            background: rgba(84, 255, 122, 0.1);
+            color: #90ffb3;
+        }
+        .error {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            color: #ffb3b3;
+        }
+
+        /* Payment Methods Grid */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .method-btn {
+            padding: 16px;
+            border: 2px solid #26455f;
+            border-radius: 10px;
+            background: rgba(10, 20, 35, 0.8);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-align: center;
+        }
+        .method-btn:hover {
+            border-color: #38b6ff;
+            background: rgba(56, 182, 255, 0.1);
+        }
+        .method-btn.active {
+            border-color: #38b6ff;
+            background: rgba(56, 182, 255, 0.2);
+            color: #38b6ff;
+        }
+
+        /* Balance Display */
+        .balance-card {
+            background: linear-gradient(135deg, #0d4a7a 0%, #082a4a 100%);
+            border: 1px solid #38b6ff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .balance-card .label { color: #9cc9ff; font-size: 0.9rem; }
+        .balance-card .amount { 
+            font-size: 2rem; 
+            font-weight: bold; 
+            color: #38b6ff;
+            margin-top: 8px;
+        }
+
+        /* Crypto Portfolio */
+        .crypto-section {
+            background: linear-gradient(135deg, rgba(30, 50, 70, 0.9) 0%, rgba(15, 30, 50, 0.9) 100%);
+            border: 1px solid rgba(84, 255, 122, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        .crypto-section h3 {
+            color: #54ff7a;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        .crypto-item {
+            background: rgba(84, 255, 122, 0.08);
+            border: 1px solid rgba(84, 255, 122, 0.2);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .crypto-item:hover {
+            border-color: #54ff7a;
+            background: rgba(84, 255, 122, 0.15);
+        }
+        .crypto-item .name { font-weight: bold; color: #54ff7a; }
+        .crypto-item .symbol { color: #9cc9ff; font-size: 0.85rem; }
+
+        /* Rate Info */
+        .rate-info {
+            background: rgba(56, 182, 255, 0.08);
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 12px;
+            color: #b3d9ff;
+            font-size: 0.9rem;
+            border-left: 3px solid #38b6ff;
+        }
+
+        /* Message */
+        #depositMessage, #withdrawMessage {
+            min-height: 40px;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .header h1 { font-size: 2rem; }
+            .tabs { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="header">
+            <h1>💳 Caisse</h1>
+            <div class="header-buttons">
+                <button onclick="window.location.href='index.html'">← Retour</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('deposit')">📥 Dépôt</button>
+            <button class="tab-btn" onclick="switchTab('withdraw')">📤 Retrait</button>
+        </div>
+
+        <!-- Deposit Tab -->
+        <div id="deposit" class="tab-content active">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>💰 Solde Actuel</h2>
+                    <div class="balance-card">
+                        <div class="label">Solde en USD</div>
+                        <div class="amount" id="balanceDisplay">0.00$</div>
+                    </div>
+
+                    <h2 style="margin-top: 24px;">💳 Moyens de Paiement</h2>
+                    <div class="form-group">
+                        <label>Sélectionnez un moyen de paiement</label>
+                        <div class="methods-grid" id="depositMethods"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Montant USD</label>
+                        <input type="number" id="depositAmount" placeholder="Ex: 50.00" step="0.01" min="0.01" oninput="updateDepositRate()">
+                    </div>
+
+                    <div id="depositRateInfo" class="rate-info" style="display:none;"></div>
+                    <button class="btn btn-primary" onclick="sendDeposit()">Déposer</button>
+                    <div id="depositMessage" style="margin-top: 16px;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>ℹ️ Information</h2>
+                    <div class="info-box">
+                        <strong>Commission:</strong> 5% sur tous les dépôts
+                    </div>
+                    <div class="info-box">
+                        <strong>Dépôt minimum:</strong> 0.01 USD
+                    </div>
+                    <div class="info-box">
+                        <strong>Traitement:</strong> Instantané
+                    </div>
+                    <div class="info-box">
+                        <strong>Sécurité:</strong> Tous les dépôts sont sécurisés et cryptés
+                    </div>
+                    <div class="info-box">
+                        <strong>Devises supportées:</strong> USD, EUR, GBP, CAD, AUD, JPY, CHF, CNY, INR, MXN, BRL, RUB, ZAR, SGD, HKD, NOK, SEK, DKK, TRY, PLN, CZK, HUF, AED, SAR
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Withdraw Tab -->
+        <div id="withdraw" class="tab-content">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>💰 Solde Actuel</h2>
+                    <div class="balance-card">
+                        <div class="label">Solde en USD</div>
+                        <div class="amount" id="balanceDisplay2">0.00$</div>
+                    </div>
+
+                    <h2 style="margin-top: 24px;">💳 Moyens de Retrait</h2>
+                    <div class="form-group">
+                        <label>Sélectionnez un moyen de retrait</label>
+                        <div class="methods-grid" id="withdrawMethods"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Montant USD à Retirer</label>
+                        <input type="number" id="withdrawAmount" placeholder="Ex: 50.00" step="0.01" min="0.01" oninput="updateWithdrawRate()">
+                    </div>
+
+                    <div id="withdrawRateInfo" class="rate-info" style="display:none;"></div>
+                    <button class="btn btn-primary" onclick="sendWithdraw()">Retirer</button>
+                    <div id="withdrawMessage" style="margin-top: 16px;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>ℹ️ Information</h2>
+                    <div class="info-box">
+                        <strong>Commission:</strong> 5% sur tous les retraits
+                    </div>
+                    <div class="info-box">
+                        <strong>Retrait minimum:</strong> 0.01 USD
+                    </div>
+                    <div class="info-box">
+                        <strong>Traitement:</strong> Instantané
+                    </div>
+                    <div class="info-box">
+                        <strong>Délai de virement:</strong> 1-3 jours bancaires
+                    </div>
+                    <div class="info-box">
+                        <strong>Solde actuel:</strong> Vous pouvez retirer jusqu'à votre solde disponible
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crypto Portfolio Section -->
+        <div class="crypto-section">
+            <h3>🪙 Portefeuille Crypto (Bientôt disponible)</h3>
+            <p style="color: #9cc9ff; margin-bottom: 16px;">Gérez votre portefeuille de cryptomonnaies séparément. Les cryptos ne sont pas mélangées avec les moyens de paiement traditionnels pour plus de sécurité.</p>
+            <div class="crypto-grid">
+                <div class="crypto-item">
+                    <div class="name">Bitcoin</div>
+                    <div class="symbol">BTC</div>
+                    <div style="color: #54ff7a; margin-top: 8px; font-weight: bold;">0.00000 BTC</div>
+                </div>
+                <div class="crypto-item">
+                    <div class="name">Ethereum</div>
+                    <div class="symbol">ETH</div>
+                    <div style="color: #54ff7a; margin-top: 8px; font-weight: bold;">0.00000 ETH</div>
+                </div>
+                <div class="crypto-item">
+                    <div class="name">Tether</div>
+                    <div class="symbol">USDT</div>
+                    <div style="color: #54ff7a; margin-top: 8px; font-weight: bold;">0.00000 USDT</div>
+                </div>
+                <div class="crypto-item">
+                    <div class="name">USD Coin</div>
+                    <div class="symbol">USDC</div>
+                    <div style="color: #54ff7a; margin-top: 8px; font-weight: bold;">0.00000 USDC</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const FIAT_METHODS = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CHF', 'CNY', 'INR', 'MXN', 'BRL'];
+        const SPECIAL_METHODS = ['PayPal', 'Bank Transfer'];
+        let currentRates = {};
+        let selectedDepositMethod = 'USD';
+        let selectedWithdrawMethod = 'USD';
+
+        async function init() {
+            await loadRates();
+            await loadProfile();
+            renderDepositMethods();
+            renderWithdrawMethods();
+        }
+
+        async function loadRates() {
+            const response = await apiFetch('/rates');
+            if (response.ok && response.data.success) {
+                currentRates = response.data.rates || {};
+            }
+        }
+
+        async function loadProfile() {
+            const response = await apiFetch('/auth/profile');
+            if (response.ok && response.data.success) {
+                const balance = response.data.user.balance.toFixed(2);
+                document.getElementById('balanceDisplay').innerText = balance + '$';
+                document.getElementById('balanceDisplay2').innerText = balance + '$';
+            }
+        }
+
+        function renderDepositMethods() {
+            const container = document.getElementById('depositMethods');
+            const methods = [...FIAT_METHODS, ...SPECIAL_METHODS];
+            container.innerHTML = methods.map(method => `
+                <button class="method-btn ${method === 'USD' ? 'active' : ''}" 
+                        onclick="selectDepositMethod('${method}')">
+                    ${method}
+                </button>
+            `).join('');
+        }
+
+        function renderWithdrawMethods() {
+            const container = document.getElementById('withdrawMethods');
+            const methods = [...FIAT_METHODS, ...SPECIAL_METHODS];
+            container.innerHTML = methods.map(method => `
+                <button class="method-btn ${method === 'USD' ? 'active' : ''}" 
+                        onclick="selectWithdrawMethod('${method}')">
+                    ${method}
+                </button>
+            `).join('');
+        }
+
+        function selectDepositMethod(method) {
+            selectedDepositMethod = method;
+            document.querySelectorAll('#depositMethods .method-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === method);
+            });
+            updateDepositRate();
+        }
+
+        function selectWithdrawMethod(method) {
+            selectedWithdrawMethod = method;
+            document.querySelectorAll('#withdrawMethods .method-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === method);
+            });
+            updateWithdrawRate();
+        }
+
+        function updateDepositRate() {
+            const amount = parseFloat(document.getElementById('depositAmount').value) || 0;
+            const rate = currentRates[selectedDepositMethod] || 1;
+            const rateInfo = document.getElementById('depositRateInfo');
+            if (amount > 0) {
+                const commission = amount * 0.05;
+                rateInfo.innerHTML = `
+                    <strong>Taux:</strong> 1 USD = ${(1/rate).toFixed(6)} ${selectedDepositMethod}<br>
+                    <strong>Commission (5%):</strong> ${commission.toFixed(2)} USD<br>
+                    <strong>Vous recevrez:</strong> ${(amount - commission).toFixed(2)} USD
+                `;
+                rateInfo.style.display = 'block';
+            } else {
+                rateInfo.style.display = 'none';
+            }
+        }
+
+        function updateWithdrawRate() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+            const rate = currentRates[selectedWithdrawMethod] || 1;
+            const rateInfo = document.getElementById('withdrawRateInfo');
+            if (amount > 0) {
+                const commission = amount * 0.05;
+                rateInfo.innerHTML = `
+                    <strong>Taux:</strong> 1 USD = ${(1/rate).toFixed(6)} ${selectedWithdrawMethod}<br>
+                    <strong>Commission (5%):</strong> ${commission.toFixed(2)} USD<br>
+                    <strong>Montant net reçu:</strong> ${(amount - commission).toFixed(2)} USD en ${selectedWithdrawMethod}
+                `;
+                rateInfo.style.display = 'block';
+            } else {
+                rateInfo.style.display = 'none';
+            }
+        }
+
+        async function sendDeposit() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const msg = document.getElementById('depositMessage');
+            msg.innerText = '';
+            
+            if (!amount || amount <= 0) {
+                msg.innerHTML = '<div class="info-box error">❌ Montant invalide</div>';
+                return;
+            }
+
+            const response = await apiFetch('/deposit', {
+                method: 'POST',
+                body: { amount, method: selectedDepositMethod }
+            });
+
+            if (response.ok && response.data.success) {
+                msg.innerHTML = `<div class="info-box success">✓ Dépôt de ${amount} ${selectedDepositMethod} effectué! Commission: ${response.data.commission.toFixed(2)}$</div>`;
+                document.getElementById('depositAmount').value = '';
+                updateDepositRate();
+                setTimeout(() => loadProfile(), 500);
+            } else {
+                msg.innerHTML = `<div class="info-box error">❌ ${response.data.message || 'Erreur du dépôt'}</div>`;
+            }
+        }
+
+        async function sendWithdraw() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const msg = document.getElementById('withdrawMessage');
+            msg.innerText = '';
+            
+            if (!amount || amount <= 0) {
+                msg.innerHTML = '<div class="info-box error">❌ Montant invalide</div>';
+                return;
+            }
+
+            const response = await apiFetch('/withdraw', {
+                method: 'POST',
+                body: { amount, method: selectedWithdrawMethod }
+            });
+
+            if (response.ok && response.data.success) {
+                msg.innerHTML = `<div class="info-box success">✓ Retrait de ${amount} USD en ${selectedWithdrawMethod} effectué! Commission: ${response.data.commission.toFixed(2)}$</div>`;
+                document.getElementById('withdrawAmount').value = '';
+                updateWithdrawRate();
+                setTimeout(() => loadProfile(), 500);
+            } else {
+                msg.innerHTML = `<div class="info-box error">❌ ${response.data.message || 'Erreur du retrait'}</div>`;
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+            await init();
+        });
+    </script>
+</body>
+</html>

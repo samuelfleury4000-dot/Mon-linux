@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Compte - Casino</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a3a 50%, #0d1420 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page { max-width: 900px; margin: 0 auto; }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header h1 { font-size: 2.5rem; color: #38b6ff; }
+        .header-buttons { display: flex; gap: 12px; }
+        .header-buttons button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #0c4a7a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .header-buttons button:hover { background: #0d5a8a; }
+
+        /* Cards Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(135deg, rgba(20, 40, 60, 0.9) 0%, rgba(10, 25, 45, 0.9) 100%);
+            border: 1px solid rgba(56, 182, 255, 0.2);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(56, 182, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(56, 182, 255, 0.1);
+        }
+        .card h2 {
+            color: #38b6ff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Profile Info */
+        .profile-item {
+            background: rgba(10, 20, 35, 0.8);
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 3px solid #38b6ff;
+        }
+        .profile-item .label {
+            color: #9cc9ff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .profile-item .value {
+            color: #38b6ff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        /* Button Group */
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #38b6ff 0%, #2496dd 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4ac6ff 0%, #2fa6ed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(56, 182, 255, 0.3);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #0c7ba8 0%, #084d6a 100%);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #0e92c8 0%, #0a5d7a 100%);
+            transform: translateY(-2px);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(56, 182, 255, 0.1);
+            border-left: 4px solid #38b6ff;
+            padding: 16px;
+            border-radius: 8px;
+            color: #b3d9ff;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header { flex-direction: column; align-items: flex-start; }
+            .header h1 { font-size: 2rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="header">
+            <h1>👤 Mon Compte</h1>
+            <div class="header-buttons">
+                <button onclick="window.location.href='index.html'">← Accueil</button>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Profile Card -->
+            <div class="card">
+                <h2>📋 Informations Personnelles</h2>
+                <div id="profileInfo">
+                    <div class="profile-item">
+                        <div class="label">Email</div>
+                        <div class="value">Chargement...</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="label">Rôle</div>
+                        <div class="value">Chargement...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Balance Card -->
+            <div class="card">
+                <h2>💰 Solde</h2>
+                <div class="profile-item" style="border-left-color: #54ff7a;">
+                    <div class="label">Solde Actuel (USD)</div>
+                    <div class="value" id="balanceValue" style="color: #54ff7a; font-size: 2rem;">0.00$</div>
+                </div>
+                <div class="info-box">
+                    <strong>💡 Info:</strong> Votre solde est mis à jour en temps réel. Les commissions de 5% sont appliquées sur les dépôts, retraits et pertes.
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>🎯 Actions Rapides</h2>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="window.location.href='transfert.html'">💳 Caisse (Dépôt/Retrait)</button>
+                <button class="btn btn-secondary" onclick="window.location.href='stats.html'">📊 Mes Statistiques</button>
+                <button class="btn btn-secondary" onclick="window.location.href='games.html'">🎮 Jeux</button>
+                <button class="btn btn-secondary" onclick="window.location.href='login.html'">🚪 Se Déconnecter</button>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="card">
+            <h2>ℹ️ Compte & Sécurité</h2>
+            <div class="info-box">
+                <strong>✓ Session Sécurisée:</strong> Votre session est cryptée et protégée par un token d'authentification unique.
+            </div>
+            <div class="info-box">
+                <strong>✓ Données Protégées:</strong> Toutes vos informations personnelles et financières sont stockées de manière sécurisée en base de données cryptée.
+            </div>
+            <div class="info-box">
+                <strong>✓ Historique:</strong> Tous vos dépôts, retraits et paris sont enregistrés pour votre transparence.
+            </div>
+            <div class="info-box">
+                <strong>✓ Support:</strong> Besoin d'aide? Toutes les questions sur votre compte peuvent être adressées via le support 24/7.
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadProfile() {
+            const response = await apiFetch('/auth/profile');
+            if (response.ok && response.data.success) {
+                const user = response.data.user;
+                const html = `
+                    <div class="profile-item">
+                        <div class="label">Email</div>
+                        <div class="value">${user.email}</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="label">Rôle</div>
+                        <div class="value">${user.role === 'admin' ? '🔐 Administrateur' : '👤 Utilisateur'}</div>
+                    </div>
+                `;
+                document.getElementById('profileInfo').innerHTML = html;
+                document.getElementById('balanceValue').innerText = user.balance.toFixed(2) + '$';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+            await loadProfile();
+        });
+    </script>
+</body>
+</html>

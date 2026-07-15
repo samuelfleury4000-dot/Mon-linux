@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grand Wheel</title>
+    <style>
+        body { font-family: sans-serif; background: radial-gradient(circle at top, #08111b, #030608); color: white; padding: 20px; }
+        .page { max-width: 720px; margin: auto; }
+        .box { background: rgba(9, 18, 34, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+        .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; }
+        .status { margin-top: 18px; font-size: 1.05rem; min-height: 32px; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box">
+            <h1>Grand Wheel</h1>
+            <p>Choisis ta couleur. Rouge/Noir: 48.6%, Payout 1.95x | Vert: 2.7%, Payout 13x</p>
+            <div class="options">
+                <button id="btnRed" onclick="setChoice('red')">Rouge</button>
+                <button id="btnBlack" onclick="setChoice('black')">Noir</button>
+                <button id="btnGreen" onclick="setChoice('green')">Vert</button>
+            </div>
+            <input id="amount" type="number" placeholder="Montant à miser" step="0.01" min="0.01" style="width:100%;padding:14px;margin-top:14px;border-radius:14px;border:1px solid #26455f;background:#061122;color:white;">
+            <button onclick="playWheel()">Tourner la roue</button>
+            <p class="status" id="result"></p>
+            <button style="background:#1f4d6e;" onclick="window.location.href='games.html'">Retour aux jeux</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        let selectedChoice = 'red';
+
+        function setChoice(choice) {
+            selectedChoice = choice;
+            document.getElementById('btnRed').style.background = choice === 'red' ? '#ff5a5a' : '#38b6ff';
+            document.getElementById('btnBlack').style.background = choice === 'black' ? '#1fa2ff' : '#38b6ff';
+            document.getElementById('btnGreen').style.background = choice === 'green' ? '#54ff7a' : '#38b6ff';
+        }
+
+        async function playWheel() {
+            if (!await requireLogin()) return;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const resultEl = document.getElementById('result');
+            resultEl.innerText = '';
+            if (!amount || amount <= 0) {
+                resultEl.innerText = 'Montant invalide.';
+                return;
+            }
+            const btn = event.target;
+            btn.disabled = true;
+            resultEl.innerText = '⏳ Roue en cours...';
+            const response = await apiFetch('/game/wheel', { method: 'POST', body: { amount, choice: selectedChoice } });
+            btn.disabled = false;
+            if (response.ok && response.data.success) {
+                saveSession({ ...getSession(), balance: response.data.balance });
+                const details = response.data.details || {};
+                resultEl.innerText = response.data.result === 'win'
+                    ? `🎉 Gagné ! La roue est tombée sur ${details.color}. Tu remportes ${response.data.payout.toFixed(2)}$.`
+                    : `❌ Perdu. La roue est tombée sur ${details.color}.`;
+            } else {
+                resultEl.innerText = `❌ ${response.data.message || 'Erreur du jeu.'}`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+            setChoice('red');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Casino</title>
+    <style>
+        body { font-family: sans-serif; background: #060f16; color: white; padding: 20px; }
+        .page { max-width: 1100px; margin: auto; }
+        .box { background: #0f1f2f; border-radius: 14px; padding: 24px; margin-bottom: 18px; }
+        button { padding: 10px 14px; border: none; border-radius: 10px; background: #1fa2ff; color: white; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #26455f; padding: 10px; text-align: left; }
+        th { background: #122c41; }
+        .header-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box header-row">
+            <div>
+                <h1>Panneau Admin</h1>
+                <p>Gestion des dépôts, retraits et statistiques du casino.</p>
+            </div>
+            <button onclick="window.location.href='index.html'">Retour</button>
+        </div>
+
+        <div class="box" id="statsBox"></div>
+        <div class="box" id="depositsBox"></div>
+        <div class="box" id="withdrawsBox"></div>
+        <div class="box" id="usersBox"></div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        async function loadAdmin() {
+            if (!await requireLogin()) return;
+            const profile = await apiFetch('/auth/profile', { method: 'GET' });
+            if (!profile.ok || profile.data.user.role !== 'admin') {
+                document.getElementById('statsBox').innerHTML = '<p>Accès admin requis.</p>';
+                return;
+            }
+
+            const [stats, deposits, withdraws, users] = await Promise.all([
+                apiFetch('/admin/stats', { method: 'GET' }),
+                apiFetch('/admin/deposits', { method: 'GET' }),
+                apiFetch('/admin/withdrawals', { method: 'GET' }),
+                apiFetch('/admin/all-users', { method: 'GET' })
+            ]);
+
+            if (stats.ok) {
+                document.getElementById('statsBox').innerHTML = `<h2>Statistiques</h2>
+                    <p>Fonds casino : ${stats.data.funds.toFixed(2)} $</p>
+                    <p>Total paris : ${stats.data.totalBets.toFixed(2)} $</p>
+                    <p>Victoires : ${stats.data.totalWins}</p>
+                    <p>Défaites : ${stats.data.totalLosses}</p>
+                    <p>Gain / Commission : ${stats.data.totalProfit.toFixed(2)} $</p>
+                    <p>Commission jeux : ${stats.data.totalGameCommission.toFixed(2)} $</p>
+                    <p>Commission dépôts : ${stats.data.totalDepositCommission.toFixed(2)} $</p>
+                    <p>Commission retraits : ${stats.data.totalWithdrawCommission.toFixed(2)} $</p>
+                    <p><strong>Total commissions : ${stats.data.totalCommission.toFixed(2)} $</strong></p>`;
+            }
+
+            if (deposits.ok) {
+                const rows = deposits.data;
+                document.getElementById('depositsBox').innerHTML = '<h2>Dépôts en attente</h2>' + renderTable(rows, 'deposit');
+            }
+            if (withdraws.ok) {
+                const rows = withdraws.data;
+                document.getElementById('withdrawsBox').innerHTML = '<h2>Retraits en attente</h2>' + renderTable(rows, 'withdraw');
+            }
+            if (users.ok) {
+                document.getElementById('usersBox').innerHTML = '<h2>Utilisateurs</h2>' + renderUsers(users.data);
+            }
+        }
+
+        function renderTable(rows, type) {
+            if (!rows.length) return '<p>Aucun en attente.</p>';
+            let html = '<table><tr><th>ID</th><th>Utilisateur</th><th>Montant</th><th>Method</th><th>Commission</th><th>Status</th><th>Actions</th></tr>';
+            rows.forEach(row => {
+                const method = row.currency || row.asset || 'USD';
+                const commission = row.commission ? row.commission.toFixed(2) : '0.00';
+                const approve = type === 'deposit' ? `<button onclick="approveDeposit(${row.id})">Approuver</button>` : `<button onclick="approveWithdraw(${row.id})">Approuver</button>`;
+                const reject = type === 'deposit' ? `<button onclick="rejectDeposit(${row.id})">Rejeter</button>` : `<button onclick="rejectWithdraw(${row.id})">Rejeter</button>`;
+                html += `<tr><td>${row.id}</td><td>${row.userId}</td><td>${row.amount.toFixed(2)}</td><td>${method}</td><td>${commission}</td><td>${row.status}</td><td>${approve} ${reject}</td></tr>`;
+            });
+            html += '</table>';
+            return html;
+        }
+
+        function renderUsers(rows) {
+            if (!rows.length) return '<p>Aucun utilisateur trouvé.</p>';
+            let html = '<table><tr><th>Utilisateur</th><th>Solde</th><th>Rôle</th></tr>';
+            rows.forEach(row => {
+                html += `<tr><td>${row.id}</td><td>${row.balance.toFixed(2)} $</td><td>${row.role}</td></tr>`;
+            });
+            html += '</table>';
+            return html;
+        }
+
+        async function approveDeposit(id) {
+            const response = await apiFetch('/admin/approve/deposit/' + id, { method: 'POST', body: {} });
+            if (response.ok) loadAdmin();
+        }
+
+        async function approveWithdraw(id) {
+            const response = await apiFetch('/admin/approve/withdraw/' + id, { method: 'POST', body: {} });
+            if (response.ok) loadAdmin();
+        }
+
+        async function rejectDeposit(id) {
+            const response = await apiFetch('/admin/reject/deposit/' + id, { method: 'POST', body: {} });
+            if (response.ok) loadAdmin();
+        }
+
+        async function rejectWithdraw(id) {
+            const response = await apiFetch('/admin/reject/withdraw/' + id, { method: 'POST', body: {} });
+            if (response.ok) loadAdmin();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderHeader();
+            loadAdmin();
+        });
+    </script>
+</body>
+</html>

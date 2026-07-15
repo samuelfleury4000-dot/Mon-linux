@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mes Statistiques</title>
+    <style>
+        body { font-family: sans-serif; background: linear-gradient(180deg, #050a13 0%, #091a2c 100%); color: white; padding: 20px; }
+        .page { max-width: 1000px; margin: auto; }
+        .box { background: rgba(8, 20, 35, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 18px; box-shadow: 0 24px 55px rgba(0,0,0,0.35); }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .stat-card { background: #0b2034; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 20px; text-align: center; }
+        .stat-card h3 { margin: 0; color: #38b6ff; font-size: 1.1rem; }
+        .stat-card .value { font-size: 2rem; font-weight: bold; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #26455f; }
+        th { background: #0b2034; font-weight: 700; }
+        tr:hover { background: rgba(56, 182, 255, 0.05); }
+        button { width: 100%; padding: 14px; border: none; border-radius: 14px; background: #38b6ff; color: white; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box">
+            <h1>Mes Statistiques</h1>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <h3>Solde Total</h3>
+                <div class="value" id="balance">0.00$</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Mises</h3>
+                <div class="value" id="totalBets">0.00$</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Gains</h3>
+                <div class="value" id="totalWins">0.00$</div>
+            </div>
+            <div class="stat-card">
+                <h3>Taux de Victoire</h3>
+                <div class="value" id="winRate">0%</div>
+            </div>
+            <div class="stat-card">
+                <h3>Profit/Perte</h3>
+                <div class="value" id="profit" style="color: #54ff7a;">0.00$</div>
+            </div>
+            <div class="stat-card">
+                <h3>Jeu Favori</h3>
+                <div class="value" id="favoriteGame" style="font-size: 1.5rem;">-</div>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>Historique des Jeux</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jeu</th>
+                        <th>Mise</th>
+                        <th>Résultat</th>
+                        <th>Payout</th>
+                        <th>Commission</th>
+                    </tr>
+                </thead>
+                <tbody id="betsTable">
+                    <tr><td colspan="5" style="text-align: center; color: #888;">Chargement...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="box">
+            <h2>Tableau des Probabilités</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jeu</th>
+                        <th>Probabilité</th>
+                        <th>Payout</th>
+                        <th>House Edge</th>
+                        <th>RTP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎲 Dés</td>
+                        <td>3.5%</td>
+                        <td>25x</td>
+                        <td>12.5%</td>
+                        <td>87.5%</td>
+                    </tr>
+                    <tr>
+                        <td>🎰 Machines à sous</td>
+                        <td>3%</td>
+                        <td>8.5x</td>
+                        <td>74.5%</td>
+                        <td>25.5%</td>
+                    </tr>
+                    <tr>
+                        <td>🟢 Roulette (Rouge/Noir)</td>
+                        <td>48.65%</td>
+                        <td>1.95x</td>
+                        <td>2.7%</td>
+                        <td>97.3%</td>
+                    </tr>
+                    <tr>
+                        <td>🟢 Roulette (Vert)</td>
+                        <td>2.7%</td>
+                        <td>13x</td>
+                        <td>64.9%</td>
+                        <td>35.1%</td>
+                    </tr>
+                    <tr>
+                        <td>🪙 Coin Flip</td>
+                        <td>50%</td>
+                        <td>1.85x</td>
+                        <td>7.5%</td>
+                        <td>92.5%</td>
+                    </tr>
+                    <tr>
+                        <td>📈 High / Low</td>
+                        <td>50%</td>
+                        <td>1.85x</td>
+                        <td>7.5%</td>
+                        <td>92.5%</td>
+                    </tr>
+                    <tr>
+                        <td>🎡 Grand Wheel (Couleur)</td>
+                        <td>48.65%</td>
+                        <td>1.95x</td>
+                        <td>2.7%</td>
+                        <td>97.3%</td>
+                    </tr>
+                    <tr>
+                        <td>🎡 Grand Wheel (Vert)</td>
+                        <td>2.7%</td>
+                        <td>13x</td>
+                        <td>64.9%</td>
+                        <td>35.1%</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Keno</td>
+                        <td>10%</td>
+                        <td>9x</td>
+                        <td>10%</td>
+                        <td>90%</td>
+                    </tr>
+                    <tr>
+                        <td>💥 Crash</td>
+                        <td>Variable</td>
+                        <td>Variable</td>
+                        <td>2-5%</td>
+                        <td>95-98%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="color: #9cc9ff; margin-top: 16px; font-size: 0.9rem;">
+                <strong>House Edge:</strong> Avantage du casino. <strong>RTP:</strong> Return to Player - pourcentage moyen retourné aux joueurs.
+                <strong>Commission admin:</strong> 5% appliquée sur tous les paris, dépôts et retraits.
+            </p>
+        </div>
+
+        <button onclick="window.location.href='compte.html'">Retour au compte</button>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadStats() {
+            const response = await apiFetch('/auth/profile');
+            if (response.ok && response.data.success) {
+                const user = response.data.user;
+                document.getElementById('balance').innerText = user.balance.toFixed(2) + '$';
+            }
+
+            // Charger historique des paris
+            const betsResponse = await apiFetch('/api/user/bets');
+            if (betsResponse.ok && Array.isArray(betsResponse.data)) {
+                const bets = betsResponse.data;
+                if (bets.length === 0) {
+                    document.getElementById('betsTable').innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">Aucun pari pour le moment.</td></tr>';
+                    return;
+                }
+
+                let totalBets = 0, totalWins = 0, winCount = 0;
+                const gameStats = {};
+
+                bets.forEach(bet => {
+                    totalBets += bet.amount || 0;
+                    totalWins += bet.payout || 0;
+                    if (bet.result === 'win') winCount++;
+                    gameStats[bet.game] = (gameStats[bet.game] || 0) + 1;
+                });
+
+                document.getElementById('totalBets').innerText = totalBets.toFixed(2) + '$';
+                document.getElementById('totalWins').innerText = totalWins.toFixed(2) + '$';
+                document.getElementById('winRate').innerText = ((winCount / bets.length) * 100).toFixed(1) + '%';
+                document.getElementById('profit').innerText = (totalWins - totalBets).toFixed(2) + '$';
+                const favorite = Object.keys(gameStats).sort((a, b) => gameStats[b] - gameStats[a])[0];
+                document.getElementById('favoriteGame').innerText = favorite || '-';
+
+                const tbody = document.getElementById('betsTable');
+                tbody.innerHTML = bets.reverse().slice(0, 20).map(bet => `
+                    <tr>
+                        <td>${bet.game || 'N/A'}</td>
+                        <td>${(bet.amount || 0).toFixed(2)}$</td>
+                        <td>${bet.result === 'win' ? '🎉 Gagné' : '❌ Perdu'}</td>
+                        <td>${(bet.payout || 0).toFixed(2)}$</td>
+                        <td>${(bet.commission || 0).toFixed(2)}$</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+            await loadStats();
+        });
+    </script>
+</body>
+</html>

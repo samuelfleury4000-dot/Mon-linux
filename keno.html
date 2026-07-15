@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Keno</title>
+    <style>
+        body { font-family: sans-serif; background: linear-gradient(180deg, #081826, #02050a); color: white; padding: 20px; }
+        .page { max-width: 720px; margin: auto; }
+        .box { background: rgba(11, 20, 34, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+        .options { display: flex; gap: 12px; margin-top: 12px; }
+        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; }
+        .status { margin-top: 18px; font-size: 1.05rem; min-height: 32px; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box">
+            <h1>Keno</h1>
+            <p>Choisissez un numéro entre 1 et 10. Probabilité: 10%, Payout: 9x
+            <input id="choice" type="number" placeholder="Numéro choisi (1-10)" min="1" max="10" style="width:100%;padding:14px;margin-top:14px;border-radius:14px;border:1px solid #26455f;background:#061122;color:white;">
+            <input id="amount" type="number" placeholder="Montant à miser" step="0.01" min="0.01" style="width:100%;padding:14px;margin-top:14px;border-radius:14px;border:1px solid #26455f;background:#061122;color:white;">
+            <button onclick="playKeno()">Tirer</button>
+            <p class="status" id="result"></p>
+            <button style="background:#1f4d6e;" onclick="window.location.href='games.html'">Retour aux jeux</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        async function playKeno() {
+            if (!await requireLogin()) return;
+            const choice = document.getElementById('choice').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const resultEl = document.getElementById('result');
+            resultEl.innerText = '';
+            if (!choice || choice < 1 || choice > 10) {
+                resultEl.innerText = 'Choisis un numéro entre 1 et 10.';
+                return;
+            }
+            if (!amount || amount <= 0) {
+                resultEl.innerText = 'Montant invalide.';
+                return;
+            }
+            const btn = event.target;
+            btn.disabled = true;
+            resultEl.innerText = '⏳ Tirage en cours...';
+            const response = await apiFetch('/game/keno', { method: 'POST', body: { amount, choice } });
+            btn.disabled = false;
+            if (response.ok && response.data.success) {
+                saveSession({ ...getSession(), balance: response.data.balance });
+                resultEl.innerText = response.data.result === 'win'
+                    ? `🎉 Félicitations ! Le tirage était ${response.data.details?.draw} et tu as gagné ${response.data.payout.toFixed(2)}$.`
+                    : `❌ Dommage, le tirage était ${response.data.details?.draw}.`;
+            } else {
+                resultEl.innerText = `❌ ${response.data.message || 'Erreur du jeu.'}`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+        });
+    </script>
+</body>
+</html>

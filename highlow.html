@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>High / Low</title>
+    <style>
+        body { font-family: sans-serif; background: linear-gradient(135deg, #0b1c33, #02050a); color: white; padding: 20px; }
+        .page { max-width: 720px; margin: auto; }
+        .box { background: rgba(10, 18, 34, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+        .options { display: flex; gap: 12px; margin-top: 12px; }
+        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; }
+        .status { margin-top: 18px; font-size: 1.05rem; min-height: 32px; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box">
+            <h1>High / Low</h1>
+            <p>Prédits si le nombre (1-100) est supérieur à 50 ou inférieur/égal à 50. Probabilité: 50%, Payout: 1.85x (House edge: 2.7%)</p>
+            <div class="options">
+                <button id="btnHigher" onclick="setChoice('higher')">Higher</button>
+                <button id="btnLower" onclick="setChoice('lower')">Lower</button>
+            </div>
+            <input id="amount" type="number" placeholder="Montant à miser" step="0.01" min="0.01" style="width:100%;padding:14px;margin-top:14px;border-radius:14px;border:1px solid #26455f;background:#061122;color:white;">
+            <button onclick="playHighLow()">Jouer</button>
+            <p class="status" id="result"></p>
+            <button style="background:#1f4d6e;" onclick="window.location.href='games.html'">Retour aux jeux</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        let selectedChoice = 'higher';
+
+        function setChoice(choice) {
+            selectedChoice = choice;
+            document.getElementById('btnHigher').style.background = choice === 'higher' ? '#1fa2ff' : '#38b6ff';
+            document.getElementById('btnLower').style.background = choice === 'lower' ? '#1fa2ff' : '#38b6ff';
+        }
+
+        async function playHighLow() {
+            if (!await requireLogin()) return;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const resultEl = document.getElementById('result');
+            resultEl.innerText = '';
+            if (!amount || amount <= 0) {
+                resultEl.innerText = 'Montant invalide.';
+                return;
+            }
+            const btn = event.target;
+            btn.disabled = true;
+            resultEl.innerText = '⏳ Jeu en cours...';
+            const response = await apiFetch('/game/highlow', { method: 'POST', body: { amount, choice: selectedChoice } });
+            btn.disabled = false;
+            if (response.ok && response.data.success) {
+                saveSession({ ...getSession(), balance: response.data.balance });
+                resultEl.innerText = response.data.result === 'win' ? `🎉 Bravo, tu as gagné ${response.data.payout.toFixed(2)}$ !` : `❌ Perdu, le numéro était ${response.data.details?.number || '?'}`;
+            } else {
+                resultEl.innerText = `❌ ${response.data.message || 'Erreur du jeu.'}`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHeader();
+            await requireLogin();
+            setChoice('higher');
+        });
+    </script>
+</body>
+</html>

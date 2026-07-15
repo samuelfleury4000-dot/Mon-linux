@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Règles et Probabilités</title>
+    <style>
+        body { font-family: sans-serif; background: linear-gradient(180deg, #050a13 0%, #091a2c 100%); color: white; padding: 20px; }
+        .page { max-width: 1100px; margin: auto; }
+        .box { background: rgba(8, 20, 35, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 18px; box-shadow: 0 24px 55px rgba(0,0,0,0.35); }
+        h2 { color: #38b6ff; margin-top: 20px; }
+        .game-section { background: #0b2034; border-left: 4px solid #38b6ff; padding: 20px; margin-bottom: 16px; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #26455f; }
+        th { background: #061122; font-weight: 700; color: #38b6ff; }
+        .note { background: rgba(56, 182, 255, 0.1); padding: 16px; border-radius: 12px; margin-top: 16px; color: #b3d9ff; font-size: 0.95rem; }
+        button { width: 100%; padding: 14px; border: none; border-radius: 14px; background: #38b6ff; color: white; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="appHeader"></div>
+    <div class="page">
+        <div class="box">
+            <h1>Règles et Probabilités des Jeux</h1>
+            <p>Transparence totale sur tous les jeux et probabilités. Commission 5% appliquée sur chaque transaction.</p>
+        </div>
+
+        <div class="box">
+            <div class="game-section">
+                <h2>🎲 Dés</h2>
+                <p><strong>Objectif:</strong> Obtenir une combinaison gagnante en lançant deux dés.</p>
+                <p><strong>Probabilité de gain:</strong> 3.5%</p>
+                <p><strong>Payout:</strong> 25x votre mise</p>
+                <p><strong>House Edge:</strong> 12.5% (RTP: 87.5%)</p>
+                <p><strong>Commission:</strong> 5% retenue sur chaque gain</p>
+                <div class="note">
+                    <strong>Exemple:</strong> Vous misez 1$. Si vous gagnez, vous recevez 25$ × 1$ = 25$, moins 5% de commission (1.25$) = 23.75$ de profit net.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>🎰 Machines à sous</h2>
+                <p><strong>Objectif:</strong> Obtenir 3 symboles identiques pour décrocher le jackpot.</p>
+                <p><strong>Probabilité de gain:</strong> 3%</p>
+                <p><strong>Payout:</strong> 8.5x votre mise</p>
+                <p><strong>House Edge:</strong> 74.5% (RTP: 25.5%)</p>
+                <p><strong>Symboles:</strong> 🍒 Cerise, 🍋 Citron, ⭐ Étoile, 🔔 Cloche, 7 Sept, 🍉 Pastèque</p>
+                <div class="note">
+                    <strong>Note:</strong> Les machines à sous ont un house edge élevé pour compenser le faible nombre de combinaisons gagnantes.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>🟢 Roulette (37 cases)</h2>
+                <p><strong>Objectif:</strong> Prédire la couleur où s'arrêtera la balle (Rouge, Noir ou Vert).</p>
+                <table>
+                    <tr>
+                        <th>Pari</th>
+                        <th>Probabilité</th>
+                        <th>Payout</th>
+                        <th>House Edge</th>
+                        <th>RTP</th>
+                    </tr>
+                    <tr>
+                        <td>Rouge ou Noir</td>
+                        <td>48.65%</td>
+                        <td>1.95x</td>
+                        <td>2.7%</td>
+                        <td>97.3%</td>
+                    </tr>
+                    <tr>
+                        <td>Vert (0)</td>
+                        <td>2.7%</td>
+                        <td>13x</td>
+                        <td>64.9%</td>
+                        <td>35.1%</td>
+                    </tr>
+                </table>
+                <div class="note">
+                    <strong>Règle:</strong> La roulette utilise une roue avec 37 cases (0-36). Les numéros pairs sont rouges, les impairs sont noirs, et le 0 est vert.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>🪙 Coin Flip (Pile ou Face)</h2>
+                <p><strong>Objectif:</strong> Prédire si la pièce tombera sur Face ou Pile.</p>
+                <p><strong>Probabilité de gain:</strong> 50%</p>
+                <p><strong>Payout:</strong> 1.85x votre mise</p>
+                <p><strong>House Edge:</strong> 7.5% (RTP: 92.5%)</p>
+                <div class="note">
+                    <strong>Avantage maison:</strong> Bien que théoriquement 50/50, le payout est légèrement réduit (1.85x au lieu de 2x) pour couvrir le house edge.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>📈 High / Low (Haut / Bas)</h2>
+                <p><strong>Objectif:</strong> Prédire si le nombre tiré (1-100) sera supérieur à 50 ou inférieur/égal à 50.</p>
+                <p><strong>Probabilité de gain:</strong> 50%</p>
+                <p><strong>Payout:</strong> 1.85x votre mise</p>
+                <p><strong>House Edge:</strong> 7.5% (RTP: 92.5%)</p>
+                <div class="note">
+                    <strong>Transparence:</strong> Chaque tirage est indépendant et utilise une génération aléatoire côté serveur vérifiable.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>🎡 Grand Wheel (Roue de la Fortune)</h2>
+                <p><strong>Objectif:</strong> Choisir une couleur et espérer que la roue s'y arrête.</p>
+                <p>Identique à la Roulette avec 37 segments: 18 Rouges, 18 Noirs, 1 Vert (0).</p>
+                <p><strong>Payout Rouge/Noir:</strong> 1.95x | <strong>Payout Vert:</strong> 13x</p>
+                <p><strong>House Edge moyenne:</strong> 2.7% à 64.9%</p>
+            </div>
+
+            <div class="game-section">
+                <h2>🎯 Keno</h2>
+                <p><strong>Objectif:</strong> Choisir un numéro entre 1 et 10. Si le tirage correspond, vous gagnez.</p>
+                <p><strong>Probabilité de gain:</strong> 10%</p>
+                <p><strong>Payout:</strong> 9x votre mise</p>
+                <p><strong>House Edge:</strong> 10% (RTP: 90%)</p>
+                <div class="note">
+                    <strong>Mécanique:</strong> Le système tire aléatoirement un numéro entre 1 et 10. Il n'y a que 10 résultats possibles.
+                </div>
+            </div>
+
+            <div class="game-section">
+                <h2>💥 Crash</h2>
+                <p><strong>Objectif:</strong> Choisir un multiplicateur (1.1x à 100x). Si la courbe dépasse votre multiplicateur avant de "crasher", vous gagnez.</p>
+                <p><strong>Payout:</strong> Votre mise × votre multiplicateur choisi</p>
+                <p><strong>House Edge:</strong> 2-5% selon le multiplicateur</p>
+                <p><strong>Probabilité variable:</strong> Plus le multiplicateur est élevé, moins probable est le gain.</p>
+                <div class="note">
+                    <strong>Stratégie:</strong> C'est un jeu à risque variable. Un multiplicateur 1.1x a ~90% de chance de gagner, mais 100x a ~0.1%.
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>📊 Informations Générales</h2>
+            <ul style="line-height: 1.8;">
+                <li><strong>Commission admin:</strong> 5% prélevée sur chaque pari, dépôt et retrait</li>
+                <li><strong>Solde initial:</strong> Chaque nouveau compte reçoit 0.87$ de solde de départ</li>
+                <li><strong>Faucet gratuit:</strong> Gagnez 0.05$ gratuits chaque jour via le faucet</li>
+                <li><strong>Retrait minimum:</strong> Aucun minimum, retirez n'importe quel montant</li>
+                <li><strong>Généré aléatoirement:</strong> Tous les résultats sont cryptographiquement aléatoires</li>
+                <li><strong>Instant:</strong> Tous les jeux et transactions sont traitées en temps réel</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2>🔒 Responsabilité de Jeu</h2>
+            <p>
+                Ce casino est fourni à titre de démonstration éducative uniquement. Les jeux impliquent un risque financier réel. 
+                Jouez de manière responsable et ne misez que ce que vous pouvez vous permettre de perdre. 
+                Les probabilités mathématiques garantissent que le casino gagne toujours à long terme.
+            </p>
+        </div>
+
+        <button onclick="window.location.href='games.html'">Retour aux Jeux</button>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            renderHeader();
+        });
+    </script>
+</body>
+</html>
