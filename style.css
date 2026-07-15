@@ -1,34 +1,56 @@
+/* Thème Casino Premium - Fixe et Prioritaire */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
 :root {
-    --bg-main: #121212 !important;
-    --bg-card: #1e1e1e !important;
+    --bg-dark: #0a0a0a !important;
+    --bg-card: rgba(25, 25, 25, 0.9) !important;
     --gold: #d4af37 !important;
-    --text-primary: #ffffff !important;
+    --white: #ffffff !important;
 }
 
-/* Force le noir sur tout le corps de page */
-body, html {
-    background-color: var(--bg-main) !important;
-    color: var(--text-primary) !important;
+body {
+    background-color: var(--bg-dark) !important;
+    color: var(--white) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%) !important;
+    margin: 0; padding: 20px; min-height: 100vh;
 }
 
-/* Force la couleur sombre sur TOUTES les div et containers */
-div, section, main, article {
-    background-color: var(--bg-card) !important;
-    background-image: none !important;
-    border: 1px solid var(--gold) !important;
-}
-
-/* Cible spécifique pour supprimer les restes de bleu (Header, boutons, containers) */
-.header, header, .navbar, .bg-blue, [class*="blue"] {
-    background-color: var(--bg-card) !important;
+.game-container {
     background: var(--bg-card) !important;
-    border-bottom: 2px solid var(--gold) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.2) !important;
+    text-align: center;
+    max-width: 500px;
+    margin: 40px auto;
 }
 
-/* Force le look doré sur tous les boutons */
-button, .btn-bet, .btn-primary {
-    background: var(--gold) !important;
+h1 {
+    font-family: 'Playfair Display', serif !important;
+    color: var(--gold) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+}
+
+/* Bouton style Casino */
+button, .btn-bet {
+    background: linear-gradient(180deg, #d4af37 0%, #8b6b1d 100%) !important;
     color: #000 !important;
     border: none !important;
-    font-weight: bold !important;
+    padding: 15px 40px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* Force le noir sur tout élément bleu hérité */
+[class*="blue"], .blue, .btn-primary {
+    background: var(--bg-card) !important;
+    color: white !important;
+    border: 1px solid var(--gold) !important;
 }
