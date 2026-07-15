@@ -1,7 +1,20 @@
-:root { --gold: #d4af37; --bg: #0a0a0a; --card: #121212; }
-body { background: var(--bg); color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 20px; }
-.game-container { background: var(--card); border: 1px solid var(--gold); border-radius: 15px; padding: 20px; max-width: 500px; margin: 20px auto; text-align: center; box-shadow: 0 0 20px rgba(212,175,55,0.2); }
-button { background: linear-gradient(180deg, var(--gold), #8b6b1d); border: none; padding: 15px 30px; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; margin-top: 10px; }
-.display-area { background: #000; padding: 20px; border-radius: 10px; margin: 20px 0; font-size: 1.5em; border: 1px solid #333; }
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
-.cell { background: #1a1a1a; padding: 15px; border: 1px solid #444; border-radius: 5px; }
+/* Forcer la couleur sombre et dorée sur TOUT */
+:root { --gold: #d4af37 !important; }
+
+/* Cible tous les boutons et éléments qui pourraient être bleus */
+button, .btn, .btn-primary, [class*="btn"], [class*="primary"], .bg-blue {
+    background: linear-gradient(180deg, #d4af37, #b8860b) !important;
+    background-color: #d4af37 !important;
+    color: #000 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Cible les petits points bleus des dés (si c'est des divs) */
+.dot, .pips, [class*="dot"] {
+    background-color: white !important;
+}
+
+/* Fond général forcé */
+body { background-color: #0a0a0a !important; color: white !important; }
+.game-container { background: #121212 !important; border: 1px solid var(--gold) !important; }
