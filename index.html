@@ -1,315 +1,309 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Casino Graphique - Jeux en Ligne</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a1628 0%, #1a2a3a 50%, #0d1420 100%);
-            color: white;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .page { max-width: 1400px; margin: 0 auto; }
+<meta charset="UTF-8">
+<title>Casino Graphique - Jeux en Ligne</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1410 50%, #0d0d0d 100%);
+  color: white;
+  padding: 20px;
+  min-height: 100vh;
+}
+.page { max-width: 1400px; margin: 0 auto; }
 
-        /* Header */
-        .header-section {
-            background: linear-gradient(135deg, rgba(56, 182, 255, 0.1) 0%, rgba(20, 60, 90, 0.2) 100%);
-            border: 1px solid rgba(56, 182, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .header-section h1 {
-            font-size: 3rem;
-            color: #38b6ff;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px rgba(56, 182, 255, 0.3);
-        }
-        .header-section p {
-            font-size: 1.2rem;
-            color: #9cc9ff;
-            margin-bottom: 30px;
-        }
-        .user-card {
-            background: linear-gradient(135deg, #0d4a7a 0%, #082a4a 100%);
-            border: 1px solid #38b6ff;
-            padding: 20px;
-            border-radius: 12px;
-            display: inline-block;
-            min-width: 300px;
-        }
-        .user-card .label { color: #9cc9ff; font-size: 0.85rem; }
-        .user-card .value { 
-            font-size: 1.8rem; 
-            font-weight: bold; 
-            color: #38b6ff;
-            margin-top: 5px;
-        }
+/* Header */
+.header-section {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(60, 45, 10, 0.3) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.header-section h1 {
+  font-size: 3.2rem;
+  background: linear-gradient(135deg, #f0c14b 0%, #d4af37 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+  letter-spacing: 1px;
+}
+.header-section p {
+  font-size: 1.2rem;
+  color: #e0c98f;
+  margin-bottom: 30px;
+}
+.user-card {
+  background: linear-gradient(135deg, #1a1410 0%, #0d0d0d 100%);
+  border: 1px solid #d4af37;
+  padding: 20px;
+  border-radius: 12px;
+  display: inline-block;
+  min-width: 300px;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+}
+.user-card .label { color: #e0c98f; font-size: 0.85rem; }
+.user-card .value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f0c14b;
+  margin-top: 5px;
+}
 
-        /* Grid */
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+/* Grid */
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
 
-        /* Cards */
-        .card {
-            background: linear-gradient(135deg, rgba(20, 40, 60, 0.9) 0%, rgba(10, 25, 45, 0.9) 100%);
-            border: 1px solid rgba(56, 182, 255, 0.3);
-            border-radius: 16px;
-            padding: 28px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .card:hover {
-            border-color: rgba(56, 182, 255, 0.6);
-            box-shadow: 0 20px 50px rgba(56, 182, 255, 0.2);
-            transform: translateY(-5px);
-        }
-        .card .icon { font-size: 3.5rem; margin-bottom: 16px; }
-        .card h3 {
-            font-size: 1.3rem;
-            color: #38b6ff;
-            margin-bottom: 8px;
-        }
-        .card p {
-            color: #9cc9ff;
-            font-size: 0.9rem;
-            margin-bottom: 18px;
-        }
-        .card button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #38b6ff 0%, #2496dd 100%);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .card button:hover {
-            background: linear-gradient(135deg, #4ac6ff 0%, #2fa6ed 100%);
-            transform: scale(1.05);
-        }
+/* Cards */
+.card {
+  background: linear-gradient(135deg, rgba(26, 20, 16, 0.9) 0%, rgba(13, 13, 13, 0.9) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.card:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.2);
+  transform: translateY(-5px);
+}
+.card .icon { font-size: 3.5rem; margin-bottom: 16px; filter: drop-shadow(0 0 8px rgba(212,175,55,0.4)); }
+.card h3 {
+  font-size: 1.3rem;
+  color: #f0c14b;
+  margin-bottom: 8px;
+}
+.card p {
+  color: #c9b280;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+}
+.card button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f0c14b 0%, #d4af37 50%, #b8860b 100%);
+  color: #1a1410;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.card button:hover {
+  background: linear-gradient(135deg, #ffd77a 0%, #e4bf47 50%, #c8961b 100%);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
 
-        /* Faucet Section */
-        .faucet-section {
-            background: linear-gradient(135deg, rgba(84, 255, 122, 0.1) 0%, rgba(50, 200, 100, 0.1) 100%);
-            border: 2px solid rgba(84, 255, 122, 0.3);
-            border-radius: 16px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .faucet-section h2 {
-            color: #54ff7a;
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-        .faucet-section p {
-            color: #9cc9ff;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-        .faucet-btn {
-            background: linear-gradient(135deg, #54ff7a 0%, #32c864 100%);
-            color: #0a1628;
-            padding: 16px 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .faucet-btn:hover {
-            background: linear-gradient(135deg, #66ffaa 0%, #42d874 100%);
-            transform: scale(1.05);
-        }
+/* Faucet Section */
+.faucet-section {
+  background: linear-gradient(135deg, rgba(84, 255, 122, 0.08) 0%, rgba(20, 40, 20, 0.2) 100%);
+  border: 2px solid rgba(84, 255, 122, 0.3);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.faucet-section h2 {
+  color: #54ff7a;
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.faucet-section p {
+  color: #c9b280;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.faucet-btn {
+  background: linear-gradient(135deg, #54ff7a 0%, #32c864 100%);
+  color: #0a1408;
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.faucet-btn:hover {
+  background: linear-gradient(135deg, #66ffaa 0%, #42d874 100%);
+  transform: scale(1.05);
+}
 
-        /* Message */
-        .message {
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 16px;
-            font-weight: bold;
-        }
-        .success {
-            background: rgba(84, 255, 122, 0.1);
-            border: 1px solid #54ff7a;
-            color: #90ffb3;
-        }
-        .error {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid #ff6b6b;
-            color: #ffb3b3;
-        }
+/* Message */
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-weight: bold;
+}
+.success {
+  background: rgba(84, 255, 122, 0.1);
+  border: 1px solid #54ff7a;
+  color: #90ffb3;
+}
+.error {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
+  color: #ffb3b3;
+}
 
-        /* Footer Info */
-        .info-section {
-            background: rgba(56, 182, 255, 0.05);
-            border: 1px solid rgba(56, 182, 255, 0.2);
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 40px;
-        }
-        .info-section h3 {
-            color: #38b6ff;
-            margin-bottom: 16px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .info-item {
-            background: rgba(10, 20, 35, 0.8);
-            padding: 16px;
-            border-radius: 10px;
-            border-left: 3px solid #38b6ff;
-        }
-        .info-item strong { color: #38b6ff; }
+/* Footer Info */
+.info-section {
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  padding: 30px;
+  margin-top: 40px;
+}
+.info-section h3 {
+  color: #f0c14b;
+  margin-bottom: 16px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+.info-item {
+  background: rgba(13, 13, 13, 0.8);
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 3px solid #d4af37;
+}
+.info-item strong { color: #f0c14b; }
 
-        @media (max-width: 768px) {
-            .header-section { padding: 24px; }
-            .header-section h1 { font-size: 2rem; }
-            .grid-4 { grid-template-columns: repeat(2, 1fr); }
-        }
-    </style>
+@media (max-width: 768px) {
+  .header-section { padding: 24px; }
+  .header-section h1 { font-size: 2rem; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
 </head>
 <body>
-    <div id="appHeader"></div>
-    <div class="page">
-        <!-- Hero Section -->
-        <div class="header-section">
-            <h1>🎰 Casino Graphique</h1>
-            <p>Jeux passionnants, paiements sécurisés, commissions transparentes</p>
-            <div class="user-card" id="profileInfo">
-                <div class="label">Solde Actuel</div>
-                <div class="value" id="balanceDisplay">0.00$</div>
-            </div>
-        </div>
+<div id="appHeader"></div>
+<div class="page">
 
-        <!-- Main Menu Cards -->
-        <div class="grid-4">
-            <div class="card">
-                <div class="icon">🎮</div>
-                <h3>Jeux</h3>
-                <p>8+ jeux disponibles avec des vraies probabilités</p>
-                <button onclick="window.location.href='games.html'">Jouer Maintenant</button>
-            </div>
+<div class="header-section">
+<h1>🎰 Casino Graphique</h1>
+<p>Jeux passionnants, paiements sécurisés, commissions transparentes</p>
+<div class="user-card" id="profileInfo">
+<div class="label">Solde Actuel</div>
+<div class="value" id="balanceDisplay">0.00$</div>
+</div>
+</div>
 
-            <div class="card">
-                <div class="icon">💳</div>
-                <h3>Caisse</h3>
-                <p>Dépôts et retraits sécurisés instantanés</p>
-                <button onclick="window.location.href='transfert.html'">Gérer Solde</button>
-            </div>
+<div class="grid-4">
+<div class="card">
+<div class="icon">🎮</div>
+<h3>Jeux</h3>
+<p>8+ jeux disponibles avec des vraies probabilités</p>
+<button onclick="window.location.href='games.html'">Jouer Maintenant</button>
+</div>
+<div class="card">
+<div class="icon">💳</div>
+<h3>Caisse</h3>
+<p>Dépôts et retraits sécurisés instantanés</p>
+<button onclick="window.location.href='transfert.html'">Gérer Solde</button>
+</div>
+<div class="card">
+<div class="icon">👤</div>
+<h3>Mon Compte</h3>
+<p>Profil, statistiques et historique</p>
+<button onclick="window.location.href='compte.html'">Voir Profil</button>
+</div>
+<div class="card">
+<div class="icon">🔐</div>
+<h3>Admin</h3>
+<p>Gérer le casino (admin uniquement)</p>
+<button onclick="window.location.href='admin.html'">Accéder</button>
+</div>
+</div>
 
-            <div class="card">
-                <div class="icon">👤</div>
-                <h3>Mon Compte</h3>
-                <p>Profil, statistiques et historique</p>
-                <button onclick="window.location.href='compte.html'">Voir Profil</button>
-            </div>
+<div class="faucet-section">
+<h2>🎁 Faucet Gratuit</h2>
+<p>Recevez 0.05$ chaque jour gratuitement sans conditions!</p>
+<button class="faucet-btn" onclick="claimFaucet()">Réclamer 0.05$ Gratuitement</button>
+<div id="faucetResult"></div>
+</div>
 
-            <div class="card">
-                <div class="icon">🔐</div>
-                <h3>Admin</h3>
-                <p>Gérer le casino (admin uniquement)</p>
-                <button onclick="window.location.href='admin.html'">Accéder</button>
-            </div>
-        </div>
+<div class="info-section">
+<h3>📊 À Propos du Casino</h3>
+<div class="info-grid">
+<div class="info-item">
+<strong>✓ Probabilités Réelles</strong>
+<p>Tous les jeux utilisent des probabilités réalistes de casino avec RTP affiché.</p>
+</div>
+<div class="info-item">
+<strong>✓ Sécurité 100%</strong>
+<p>Tous les dépôts, retraits et transactions sont cryptés et sécurisés.</p>
+</div>
+<div class="info-item">
+<strong>✓ Commission Transparente</strong>
+<p>Commission fixe de 5% sur dépôts, retraits et gains. Pas de frais cachés.</p>
+</div>
+<div class="info-item">
+<strong>✓ Paiements Multiples</strong>
+<p>Déposez et retirez via USD, EUR, GBP, PayPal, virement bancaire et plus.</p>
+</div>
+<div class="info-item">
+<strong>✓ Traitement Instant</strong>
+<p>Les dépôts et retraits sont traités instantanément sur votre compte.</p>
+</div>
+<div class="info-item">
+<strong>✓ Support 24/7</strong>
+<p>Portefeuille crypto séparé disponible très bientôt pour plus d'options.</p>
+</div>
+</div>
+</div>
 
-        <!-- Faucet Section -->
-        <div class="faucet-section">
-            <h2>🎁 Faucet Gratuit</h2>
-            <p>Recevez 0.05$ chaque jour gratuitement sans conditions!</p>
-            <button class="faucet-btn" onclick="claimFaucet()">Réclamer 0.05$ Gratuitement</button>
-            <div id="faucetResult"></div>
-        </div>
-
-        <!-- Info Section -->
-        <div class="info-section">
-            <h3>📊 À Propos du Casino</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>✓ Probabilités Réelles</strong>
-                    <p>Tous les jeux utilisent des probabilités réalistes de casino avec RTP affiché.</p>
-                </div>
-                <div class="info-item">
-                    <strong>✓ Sécurité 100%</strong>
-                    <p>Tous les dépôts, retraits et transactions sont cryptés et sécurisés.</p>
-                </div>
-                <div class="info-item">
-                    <strong>✓ Commission Transparente</strong>
-                    <p>Commission fixe de 5% sur dépôts, retraits et gains. Pas de frais cachés.</p>
-                </div>
-                <div class="info-item">
-                    <strong>✓ Paiements Multiples</strong>
-                    <p>Déposez et retirez via USD, EUR, GBP, PayPal, virement bancaire et plus.</p>
-                </div>
-                <div class="info-item">
-                    <strong>✓ Traitement Instant</strong>
-                    <p>Les dépôts et retraits sont traités instantanément sur votre compte.</p>
-                </div>
-                <div class="info-item">
-                    <strong>✓ Support 24/7</strong>
-                    <p>Portefeuille crypto séparé disponible très bientôt pour plus d'options.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
-    <script>
-        async function claimFaucet() {
-            const resultEl = document.getElementById('faucetResult');
-            resultEl.innerText = '';
-            resultEl.className = '';
-            
-            const btn = event.target;
-            btn.disabled = true;
-            btn.innerText = '⏳ Traitement...';
-
-            const response = await apiFetch('/claim-faucet', { method: 'POST', body: {} });
-            
-            if (response.ok && response.data.success) {
-                resultEl.className = 'message success';
-                resultEl.innerText = '✓ ' + response.data.message;
-                await loadProfile();
-            } else {
-                resultEl.className = 'message error';
-                resultEl.innerText = '✗ ' + (response.data.message || 'Erreur du faucet');
-            }
-
-            btn.disabled = false;
-            btn.innerText = 'Réclamer 0.05$ Gratuitement';
-        }
-
-        async function loadProfile() {
-            const response = await apiFetch('/auth/profile');
-            if (response.ok && response.data.success) {
-                const balance = response.data.user.balance.toFixed(2);
-                document.getElementById('balanceDisplay').innerText = balance + '$';
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderHeader();
-            if (await requireLogin()) {
-                await loadProfile();
-            }
-        });
-    </script>
+</div>
+<script src="app.js"></script>
+<script>
+async function claimFaucet() {
+  const resultEl = document.getElementById('faucetResult');
+  resultEl.innerText = '';
+  resultEl.className = '';
+  const btn = event.target;
+  btn.disabled = true;
+  btn.innerText = '⏳ Traitement...';
+  const response = await apiFetch('/claim-faucet', { method: 'POST', body: {} });
+  if (response.ok && response.data.success) {
+    resultEl.className = 'message success';
+    resultEl.innerText = '✓ ' + response.data.message;
+    await loadProfile();
+  } else {
+    resultEl.className = 'message error';
+    resultEl.innerText = '✗ ' + (response.data.message || 'Erreur du faucet');
+  }
+  btn.disabled = false;
+  btn.innerText = 'Réclamer 0.05$ Gratuitement';
+}
+async function loadProfile() {
+  const response = await apiFetch('/auth/profile');
+  if (response.ok && response.data.success) {
+    const balance = response.data.user.balance.toFixed(2);
+    document.getElementById('balanceDisplay').innerText = balance + '$';
+  }
+}
+window.addEventListener('DOMContentLoaded', async () => {
+  renderHeader();
+  if (await requireLogin()) {
+    await loadProfile();
+  }
+});
+</script>
 </body>
 </html>
