@@ -1,0 +1,25 @@
+<div class="game-container">
+    <h1 id="game-title">Jeu de Casino</h1>
+    <div id="display-area" style="font-size: 2em; margin: 20px 0; color: var(--gold);">---</div>
+    <input type="number" id="bet-input" placeholder="Mise ($)" style="padding:10px; border-radius:5px; border:none; width:80%;">
+    <br><br>
+    <button class="btn-bet" onclick="play()">LANCER LE JEU</button>
+</div>
+
+<script>
+async function play() {
+    const bet = document.getElementById('bet-input').value;
+    const display = document.getElementById('display-area');
+    display.innerText = "Calcul en cours...";
+    
+    // Ici, tu appelles ton API (ton backend Python)
+    // Pour l'exemple, on simule l'appel backend
+    console.log("Envoi de la mise au serveur pour le jeu...");
+    
+    // Simulation d'animation casino
+    setTimeout(() => {
+        display.innerText = "GAGNÉ ! x5"; // Remplacer par le résultat du serveur
+        display.style.color = "#2e7d32";
+    }, 1500);
+}
+</script>
