@@ -18,3 +18,10 @@ button, .btn, .btn-primary, [class*="btn"], [class*="primary"], .bg-blue {
 /* Fond général forcé */
 body { background-color: #0a0a0a !important; color: white !important; }
 .game-container { background: #121212 !important; border: 1px solid var(--gold) !important; }
+
+/* Correction ciblée : seulement les boutons, pas le reste */
+button, .btn, .btn-primary, [type="submit"] {
+    background: #d4af37 !important;
+    color: #000 !important;
+    border: 1px solid #b8860b !important;
+}
