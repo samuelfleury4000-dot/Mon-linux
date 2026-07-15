@@ -1,99 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hub Jeux Casino</title>
-    <style>
-        body { font-family: sans-serif; background: linear-gradient(180deg, #050a13 0%, #091a2c 100%); color: white; padding: 20px; }
-        .page { max-width: 1100px; margin: auto; }
-        .box { background: rgba(8, 20, 35, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 18px; box-shadow: 0 24px 55px rgba(0,0,0,0.35); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-        .card { background: #0b2034; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 20px; }
-        .card h3 { margin-top: 0; }
-        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; }
-        .footer { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
-        .footer a { color: #78d4ff; text-decoration: none; }
-    </style>
+<meta charset="UTF-8">
+<title>Hub Jeux Casino</title>
+<style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(180deg, #0a0a0a 0%, #1a1410 100%); color: white; padding: 20px; }
+.page { max-width: 1100px; margin: auto; }
+.box { background: rgba(20, 15, 10, 0.95); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 24px; padding: 28px; margin-bottom: 18px; box-shadow: 0 24px 55px rgba(0,0,0,0.5); }
+.box h1 {
+  background: linear-gradient(135deg, #f0c14b 0%, #d4af37 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+}
+.box p { color: #c9b280; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.card { background: linear-gradient(135deg, rgba(26,20,16,0.9) 0%, rgba(13,13,13,0.9) 100%); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 22px; padding: 20px; transition: all 0.3s; }
+.card:hover { border-color: rgba(212, 175, 55, 0.6); transform: translateY(-4px); box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15); }
+.card h3 { margin-top: 0; color: #f0c14b; }
+.card p { color: #c9b280; font-size: 0.9rem; }
+button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: linear-gradient(135deg, #f0c14b 0%, #d4af37 50%, #b8860b 100%); color: #1a1410; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+button:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+.footer { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+.footer a { color: #e0c98f; text-decoration: none; }
+.footer a:hover { color: #f0c14b; }
+</style>
 </head>
 <body>
-    <div id="appHeader"></div>
-    <div class="page">
-        <div class="box">
-            <h1>Hub Jeux Casino</h1>
-            <p>Un seul clic pour accéder à tous les jeux disponibles. Nouveaux jeux ajoutés et liens vers des faucets externes.</p>
-        </div>
+<div id="appHeader"></div>
+<div class="page">
 
-        <div class="box grid">
-            <div class="card">
-                <h3>🎲 Dés</h3>
-                <p>Lance deux dés. Gagne si le résultat correspond à votre pari.</p>
-                <button onclick="window.location.href='dés.html'">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>🎰 Machines à sous</h3>
-                <p>Tournez la machine et tentez de décrocher le jackpot x10.</p>
-                <button onclick="window.location.href='slots.html'">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>🟢 Roulette</h3>
-                <p>Misez sur rouge, noir ou vert et gagnez selon le résultat.</p>
-                <button onclick="window.location.href='roulette.html'">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>🪙 Coin Flip</h3>
-                <p>Choisissez face ou pile. Gain x2 en cas de bon pari.</p>
-                <button onclick="goGame('coinflip')">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>📈 High / Low</h3>
-                <p>Prédisez si le nombre tiré sera haut (>50) ou bas (≤50).</p>
-                <button onclick="goGame('highlow')">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>🎡 Grand Wheel</h3>
-                <p>Tentez votre chance sur une roue multi-couleurs et gagnez jusqu’à x14.</p>
-                <button onclick="goGame('wheel')">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>🎯 Keno</h3>
-                <p>Choisissez un numéro et gagnez si le tirage le révèle.</p>
-                <button onclick="goGame('keno')">Jouer</button>
-            </div>
-            <div class="card">
-                <h3>💥 Crash</h3>
-                <p>Choisissez un multiplicateur et retirez-vous avant le crash.</p>
-                <button onclick="goGame('crash')">Jouer</button>
-            </div>
-        </div>
+<div class="box">
+<h1>Hub Jeux Casino</h1>
+<p>Un seul clic pour accéder à tous les jeux disponibles. Nouveaux jeux ajoutés et liens vers des faucets externes.</p>
+</div>
 
-        <div class="box">
-            <h2>Liens utiles</h2>
-            <div class="footer">
-                <a href="regles.html">📋 Règles & Probabilités</a>
-                <a href="https://faucetpay.io" target="_blank">FaucetPay</a>
-                <a href="https://freebitco.in" target="_blank">FreeBitco.in</a>
-                <a href="https://coinpayu.com" target="_blank">CoinPayU</a>
-                <a href="https://cointiply.com" target="_blank">Cointiply</a>
-                <a href="https://moonbit.co.in" target="_blank">MoonBit</a>
-                <a href="https://freecoinsweb.com" target="_blank">FreeCoinsWeb</a>
-                <a href="https://faucetcrypto.com" target="_blank">FaucetCrypto</a>
-            </div>
-        </div>
-    </div>
-    <script src="app.js"></script>
-    <script>
-        async function goGame(type) {
-            if (!await requireLogin()) return;
-            if (type === 'coinflip') return window.location.href = 'coinflip.html';
-            if (type === 'highlow') return window.location.href = 'highlow.html';
-            if (type === 'wheel') return window.location.href = 'wheel.html';
-            if (type === 'keno') return window.location.href = 'keno.html';
-            if (type === 'crash') return window.location.href = 'crash.html';
-        }
+<div class="box grid">
+<div class="card">
+<h3>🎲 Dés</h3>
+<p>Lance deux dés. Gagne si le résultat correspond à votre pari.</p>
+<button onclick="window.location.href='dés.html'">Jouer</button>
+</div>
+<div class="card">
+<h3>🎰 Machines à sous</h3>
+<p>Tournez la machine et tentez de décrocher le jackpot x10.</p>
+<button onclick="window.location.href='slots.html'">Jouer</button>
+</div>
+<div class="card">
+<h3>🟢 Roulette</h3>
+<p>Misez sur rouge, noir ou vert et gagnez selon le résultat.</p>
+<button onclick="window.location.href='roulette.html'">Jouer</button>
+</div>
+<div class="card">
+<h3>🪙 Coin Flip</h3>
+<p>Choisissez face ou pile. Gain x2 en cas de bon pari.</p>
+<button onclick="goGame('coinflip')">Jouer</button>
+</div>
+<div class="card">
+<h3>📈 High / Low</h3>
+<p>Prédisez si le nombre tiré sera haut (>50) ou bas (≤50).</p>
+<button onclick="goGame('highlow')">Jouer</button>
+</div>
+<div class="card">
+<h3>🎡 Grand Wheel</h3>
+<p>Tentez votre chance sur une roue multi-couleurs et gagnez jusqu'à x14.</p>
+<button onclick="goGame('wheel')">Jouer</button>
+</div>
+<div class="card">
+<h3>🎯 Keno</h3>
+<p>Choisissez un numéro et gagnez si le tirage le révèle.</p>
+<button onclick="goGame('keno')">Jouer</button>
+</div>
+<div class="card">
+<h3>💥 Crash</h3>
+<p>Choisissez un multiplicateur et retirez-vous avant le crash.</p>
+<button onclick="goGame('crash')">Jouer</button>
+</div>
+</div>
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderHeader();
-        });
-    </script>
+<div class="box">
+<h2 style="color:#f0c14b;">Liens utiles</h2>
+<div class="footer">
+<a href="regles.html">📋 Règles & Probabilités</a>
+<a href="https://faucetpay.io" target="_blank">FaucetPay</a>
+<a href="https://freebitco.in" target="_blank">FreeBitco.in</a>
+<a href="https://coinpayu.com" target="_blank">CoinPayU</a>
+<a href="https://cointiply.com" target="_blank">Cointiply</a>
+<a href="https://moonbit.co.in" target="_blank">MoonBit</a>
+<a href="https://freecoinsweb.com" target="_blank">FreeCoinsWeb</a>
+<a href="https://faucetcrypto.com" target="_blank">FaucetCrypto</a>
+</div>
+</div>
+
+</div>
+<script src="app.js"></script>
+<script>
+async function goGame(type) {
+  if (!await requireLogin()) return;
+  if (type === 'coinflip') return window.location.href = 'coinflip.html';
+  if (type === 'highlow') return window.location.href = 'highlow.html';
+  if (type === 'wheel') return window.location.href = 'wheel.html';
+  if (type === 'keno') return window.location.href = 'keno.html';
+  if (type === 'crash') return window.location.href = 'crash.html';
+}
+window.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+});
+</script>
 </body>
 </html>
