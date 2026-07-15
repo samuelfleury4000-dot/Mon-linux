@@ -1,0 +1,43 @@
+:root {
+    /* Palette Casino Luxe */
+    --bg-main: #121212;         /* Noir profond */
+    --bg-card: #1e1e1e;         /* Gris sombre pour les jeux */
+    --gold: #d4af37;            /* Accents Or */
+    --emerald: #2e7d32;         /* Vert tapis de jeu */
+    --text-primary: #ffffff;
+    --text-muted: #b0b0b0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+/* Applique cette classe à tes conteneurs de jeux en HTML */
+.game-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin: 20px;
+}
+
+/* Applique cette classe à tes boutons de mise */
+.btn-bet {
+    background-color: var(--emerald);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-bet:hover {
+    background-color: #388e3c;
+    box-shadow: 0 0 10px var(--gold);
+}
