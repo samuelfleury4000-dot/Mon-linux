@@ -1,36 +1,7 @@
-:root {
-    --bg-main: #121212;
-    --bg-card: #1e1e1e;
-    --gold: #d4af37;
-    --text-primary: #ffffff;
-}
-
-body {
-    background-color: var(--bg-main) !important;
-    color: var(--text-primary) !important;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Force les boîtes de jeux à adopter le look du Hub */
-div, section, .game-container {
-    background-color: var(--bg-card) !important;
-    border: 1px solid var(--gold) !important;
-    border-radius: 12px !important;
-    padding: 20px !important;
-}
-
-/* Force tous les boutons (même tes boutons bleus actuels) à devenir dorés */
-button, input[type="button"], input[type="submit"] {
-    background: linear-gradient(to bottom, #d4af37, #b8860b) !important;
-    color: white !important;
-    border: none !important;
-    padding: 12px 24px !important;
-    border-radius: 6px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-    text-transform: uppercase !important;
-}
-
-button:hover {
-    filter: brightness(1.2);
-}
+:root { --bg: #0a0a0a; --gold: #d4af37; --glow: rgba(212, 175, 55, 0.3); }
+body { background: var(--bg); color: white; font-family: 'Arial', sans-serif; margin: 0; }
+.header-casino { display: flex; justify-content: space-between; padding: 20px; border-bottom: 2px solid var(--gold); }
+.balance { font-size: 1.5em; color: var(--gold); font-weight: bold; }
+.game-container { border: 2px solid var(--gold); border-radius: 15px; padding: 30px; box-shadow: 0 0 20px var(--glow); background: #1a1a1a; margin: 50px auto; max-width: 600px; text-align: center; }
+.btn-bet { background: linear-gradient(to bottom, #d4af37, #b8860b); color: black; border: none; padding: 15px 30px; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
+.btn-bet:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--gold); }
