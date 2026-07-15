@@ -1,66 +1,9 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <title>Crash</title>
-    <style>
-        body { font-family: sans-serif; background: radial-gradient(circle at top, #050b16, #020509); color: white; padding: 20px; }
-        .page { max-width: 720px; margin: auto; }
-        .box { background: rgba(8, 18, 34, 0.96); border-radius: 24px; padding: 28px; margin-bottom: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
-        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        input { width: 100%; padding: 14px; margin-top: 14px; border-radius: 14px; border: 1px solid #26455f; background: #061122; color: white; }
-        .status { margin-top: 18px; font-size: 1.05rem; min-height: 32px; }
-    </style>
-</head>
-<body>
-    <div id="appHeader"></div>
-    <div class="page">
-        <div class="box">
-            <h1>Crash</h1>
-            <p>Choisis un multiplicateur. Si le crash survient après, tu gagnes.</p>
-            <input id="target" type="number" placeholder="Multiplicateur cible (1.01 à 500)" step="0.01" min="1.01" max="500" style="width:100%;">
-            <input id="amount" type="number" placeholder="Montant à miser" step="0.01" min="0.01" style="width:100%;">
-            <button onclick="playCrash()">Lancer</button>
-            <p class="status" id="result"></p>
-            <button style="background:#1f4d6e;" onclick="window.location.href='games.html'">Retour aux jeux</button>
-        </div>
-    </div>
-    <script src="app.js"></script>
-    <script>
-        async function playCrash() {
-            if (!await requireLogin()) return;
-            const target = parseFloat(document.getElementById('target').value);
-            const amount = parseFloat(document.getElementById('amount').value);
-            const resultEl = document.getElementById('result');
-            resultEl.innerText = '';
-            if (!target || target < 1.01 || target > 500) {
-                resultEl.innerText = 'Choisis un multiplicateur entre 1.01 et 500.';
-                return;
-            }
-            if (!amount || amount <= 0) {
-                resultEl.innerText = 'Montant invalide.';
-                return;
-            }
-            const btn = event.target;
-            btn.disabled = true;
-            resultEl.innerText = '⏳ Crash en cours...';
-            const response = await apiFetch('/game/crash', { method: 'POST', body: { amount, target } });
-            btn.disabled = false;
-            if (response.ok && response.data.success) {
-                saveSession({ ...getSession(), balance: response.data.balance });
-                resultEl.innerText = response.data.result === 'win'
-                    ? `🎉 Gagné ! Le crash a eu lieu à ${response.data.details?.crashPoint || '?'}x. Tu remportes ${response.data.payout.toFixed(2)}$.`
-                    : `❌ Perdu. Le crash a eu lieu à ${response.data.details?.crashPoint || '?'}x.`;
-            } else {
-                resultEl.innerText = `❌ ${response.data.message || 'Erreur du jeu.'}`;
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderHeader();
-            await requireLogin();
-        });
-    </script>
-</body>
-</html>
+<html><head><link rel="stylesheet" href="style.css"><title>CRASH</title></head>
+<body><div class="game-container">
+    <h1>CRASH</h1>
+    <div class="display-area">📈 1.00x 📈</div>
+    <input type="number" placeholder="Mise ($)" style="width:100%; padding:10px; background:#222; border:none; color:white; border-radius:5px;">
+    <button>JOUER</button>
+    <a href="index.html" style="color:gray; font-size:0.8em; display:block; margin-top:20px;">Retour au hub</a>
+</div></body></html>

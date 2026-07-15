@@ -1,72 +1,9 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <title>Coin Flip</title>
-    <style>
-        body { font-family: sans-serif; background: radial-gradient(circle at top, #07131e, #02050a); color: white; padding: 20px; }
-        .page { max-width: 720px; margin: auto; }
-        .box { background: rgba(12, 24, 42, 0.95); border-radius: 24px; padding: 28px; margin-bottom: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
-        button { width: 100%; padding: 14px 18px; border: none; border-radius: 14px; background: #38b6ff; color: white; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        .options { display: flex; gap: 12px; margin-top: 12px; }
-        .options button { flex: 1; }
-        .status { margin-top: 18px; font-size: 1.1rem; min-height: 32px; }
-    </style>
-</head>
-<body>
-    <div id="appHeader"></div>
-    <div class="page">
-        <div class="box">
-            <h1>Coin Flip</h1>
-            <p>Choisissez face ou pile. Probabilité: 50%, Payout: 1.85x (House edge: 2.7%)</p>
-            <div class="options">
-                <button id="choiceHeads" onclick="setChoice('heads')">Face</button>
-                <button id="choiceTails" onclick="setChoice('tails')">Pile</button>
-            </div>
-            <input id="amount" type="number" placeholder="Montant à miser" step="0.01" min="0.01" style="width:100%;padding:14px;margin-top:14px;border-radius:14px;border:1px solid #26455f;background:#061122;color:white;">
-            <button onclick="playCoinFlip()">Lancer la pièce</button>
-            <p class="status" id="result"></p>
-            <button style="background:#1f4d6e;" onclick="window.location.href='games.html'">Retour aux jeux</button>
-        </div>
-    </div>
-    <script src="app.js"></script>
-    <script>
-        let selectedChoice = 'heads';
-
-        function setChoice(choice) {
-            selectedChoice = choice;
-            document.getElementById('choiceHeads').style.background = choice === 'heads' ? '#1fa2ff' : '#38b6ff';
-            document.getElementById('choiceTails').style.background = choice === 'tails' ? '#1fa2ff' : '#38b6ff';
-        }
-
-        async function playCoinFlip() {
-            if (!await requireLogin()) return;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const resultEl = document.getElementById('result');
-            resultEl.innerText = '';
-            if (!amount || amount <= 0) {
-                resultEl.innerText = 'Montant invalide.';
-                return;
-            }
-            const btn = event.target;
-            btn.disabled = true;
-            resultEl.innerText = '⏳ Jeu en cours...';
-            const response = await apiFetch('/game/coinflip', { method: 'POST', body: { amount, choice: selectedChoice } });
-            btn.disabled = false;
-            if (response.ok && response.data.success) {
-                saveSession({ ...getSession(), balance: response.data.balance });
-                resultEl.innerText = response.data.result === 'win' ? `🎉 Tu as gagné ${response.data.payout.toFixed(2)}$ !` : '❌ Perdu, retente ta chance.';
-            } else {
-                resultEl.innerText = `❌ ${response.data.message || 'Erreur du jeu.'}`;
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderHeader();
-            await requireLogin();
-            setChoice('heads');
-        });
-    </script>
-</body>
-</html>
+<html><head><link rel="stylesheet" href="style.css"><title>COIN FLIP</title></head>
+<body><div class="game-container">
+    <h1>COIN FLIP</h1>
+    <div class="display-area">🪙 FACE ou PILE 🪙</div>
+    <input type="number" placeholder="Mise ($)" style="width:100%; padding:10px; background:#222; border:none; color:white; border-radius:5px;">
+    <button>JOUER</button>
+    <a href="index.html" style="color:gray; font-size:0.8em; display:block; margin-top:20px;">Retour au hub</a>
+</div></body></html>
